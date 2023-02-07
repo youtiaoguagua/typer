@@ -1,0 +1,65 @@
+name: build
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CGO_ENABLED: 0
+      WATCH_TOWER_TOKEN: ${{ secrets.WATCH_TOWER_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
+
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  image:
+    runs-on: ubuntu-latest
+    env:
+      CGO_ENABLED: 0
+      WATCH_TOWER_TOKEN: ${{ secrets.WATCH_TOWER_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login aliyun
+        uses: aliyun/acr-login@v1
+        with:
+          login-server: https://registry.cn-hangzhou.aliyuncs.com
+          region-id: 'cn-hangzhou'
+          username: "${{ secrets.ALI_USERNAME }}"
+          password: "${{ secrets.ALI_PASSWORD }}"
+
+      - name: Build image and push
+        run: |
+          docker build -t registry.cn-hangzhou.aliyuncs.com/youtiaoguagua/typer:latest .
+          docker tag registry.cn-hangzhou.aliyuncs.com/youtiaoguagua/typer:latest registry.cn-hangzhou.aliyuncs.com/youtiaoguagua/typer:${{ github.ref_name }}
+          docker push registry.cn-hangzhou.aliyuncs.com/youtiaoguagua/typer:latest
+          docker push registry.cn-hangzhou.aliyuncs.com/youtiaoguagua/typer:${{ github.ref_name }}
+
+      - name: Sleep for 10 seconds
+        run: sleep 10s
+        shell: bash
+
+      - name: Send signal to update image
+        run: 'curl -H "Authorization: Bearer ${{ env.WATCH_TOWER_TOKEN }}" https://watchtower.gaobili.cn/v1/update'
+

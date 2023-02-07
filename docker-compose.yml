@@ -1,0 +1,14 @@
+version: '3.6'
+services:
+  typer:
+    image: registry.cn-hangzhou.aliyuncs.com/youtiaoguagua/typer:latest
+    restart: always
+    environment:
+      - TERM=xterm-256color
+    ports:
+      - "7788:7788"
+    volumes:
+      - ./data:/typer/data
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    tty: true
