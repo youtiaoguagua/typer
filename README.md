@@ -16,7 +16,7 @@ ssh [<name>@]<host> -p <port>
 
 use the example server
 ```shell
-ssh example-user@typer.gaobili.cn -p 7788
+ssh change-your-user@typer.gaobili.cn -p 7788
 ```
 
 ### offline mod
