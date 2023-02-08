@@ -1,5 +1,16 @@
 <div align="center">
-<img width="200" src="https://user-images.githubusercontent.com/30404329/217255681-4434dddd-939c-4330-8c7e-1d3f1013e6d0.gif">
+    <img width="200" src="https://user-images.githubusercontent.com/30404329/217255681-4434dddd-939c-4330-8c7e-1d3f1013e6d0.gif" alt="">
+    <div>
+      <a href="https://goreportcard.com/report/github.com/youtiaoguagua/typer">
+        <img src="https://goreportcard.com/badge/github.com/youtiaoguagua/typer" alt="latest version" />
+      </a>
+      <a href="https://github.com/youtiaoguagua/typer/actions?query=workflow%3ABuild">
+        <img src="https://img.shields.io/github/actions/workflow/status/youtiaoguagua/typer/build.yml" alt="Build status" />
+      </a>
+      <a href="https://github.com/youtiaoguagua/typer/releases">
+        <img src="https://img.shields.io/github/v/release/youtiaoguagua/typer" alt="latest version" />
+      </a>
+    </div>
 </div>
 
 # Typer
@@ -15,6 +26,7 @@ ssh [<name>@]<host> -p <port>
 ```
 
 use the example server
+
 ```shell
 ssh change-your-user@typer.gaobili.cn -p 7788
 ```
@@ -32,7 +44,6 @@ ssh change-your-user@typer.gaobili.cn -p 7788
 * click online mod to play with others
 
 ![online](https://user-images.githubusercontent.com/30404329/217282612-7716ea91-8d84-41e2-9f20-431208c32631.gif)
-
 
 ## Install
 
